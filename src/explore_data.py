@@ -1,8 +1,13 @@
 import pandas as pd
 import numpy as np
+import os
+
+# Set up paths
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data_path = os.path.join(project_root, 'data', 'college_student_placement_dataset.csv')
 
 # Load the dataset
-df = pd.read_csv('college_student_placement_dataset.csv')
+df = pd.read_csv(data_path)
 
 # Basic information
 print("=" * 80)

@@ -4,14 +4,21 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import LabelEncoder
 import warnings
+import os
 warnings.filterwarnings('ignore')
+
+# Set up paths
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data_path = os.path.join(project_root, 'data', 'college_student_placement_dataset.csv')
+processed_data_path = os.path.join(project_root, 'data', 'processed_data.csv')
+vis_path = os.path.join(project_root, 'visualizations')
 
 # Set style for better visualizations
 sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (15, 10)
 
 # Load the dataset
-df = pd.read_csv('college_student_placement_dataset.csv')
+df = pd.read_csv(data_path)
 
 print("=" * 80)
 print("DATA PREPROCESSING STARTED")
@@ -43,8 +50,8 @@ print("\n   First 5 rows of processed data:")
 print(df_processed.head())
 
 # Save processed data
-df_processed.to_csv('processed_data.csv', index=False)
-print("\n✓ Processed data saved to 'processed_data.csv'")
+df_processed.to_csv(processed_data_path, index=False)
+print(f"\n✓ Processed data saved to '{processed_data_path}'")
 
 # ============================================================================
 # VISUALIZATIONS
@@ -145,8 +152,8 @@ plt.ylabel('Previous Semester Result', fontsize=12)
 plt.suptitle('')
 
 plt.tight_layout()
-plt.savefig('feature_analysis.png', dpi=300, bbox_inches='tight')
-print("\n✓ Feature analysis visualization saved to 'feature_analysis.png'")
+plt.savefig(os.path.join(vis_path, 'feature_analysis.png'), dpi=300, bbox_inches='tight')
+print("\n✓ Feature analysis visualization saved to 'visualizations/feature_analysis.png'")
 
 # ============================================================================
 # CORRELATION HEATMAP
@@ -158,8 +165,8 @@ sns.heatmap(correlation_matrix, annot=True, fmt='.2f', cmap='coolwarm',
             ax=ax)
 plt.title('Feature Correlation Heatmap', fontsize=16, fontweight='bold', pad=20)
 plt.tight_layout()
-plt.savefig('correlation_heatmap.png', dpi=300, bbox_inches='tight')
-print("✓ Correlation heatmap saved to 'correlation_heatmap.png'")
+plt.savefig(os.path.join(vis_path, 'correlation_heatmap.png'), dpi=300, bbox_inches='tight')
+print("✓ Correlation heatmap saved to 'visualizations/correlation_heatmap.png'")
 
 # ============================================================================
 # FEATURE IMPORTANCE ANALYSIS
@@ -181,14 +188,14 @@ plt.ylabel('Features', fontsize=12)
 plt.axvline(x=0, color='black', linestyle='--', linewidth=1)
 plt.grid(axis='x', alpha=0.3)
 plt.tight_layout()
-plt.savefig('feature_importance.png', dpi=300, bbox_inches='tight')
-print("\n✓ Feature importance visualization saved to 'feature_importance.png'")
+plt.savefig(os.path.join(vis_path, 'feature_importance.png'), dpi=300, bbox_inches='tight')
+print("\n✓ Feature importance visualization saved to 'visualizations/feature_importance.png'")
 
 print("\n" + "=" * 80)
 print("PREPROCESSING & VISUALIZATION COMPLETED SUCCESSFULLY!")
 print("=" * 80)
 print("\nGenerated Files:")
-print("1. processed_data.csv - Cleaned and encoded dataset")
-print("2. feature_analysis.png - Comprehensive feature analysis")
-print("3. correlation_heatmap.png - Feature correlation matrix")
-print("4. feature_importance.png - Feature importance based on correlation")
+print("1. data/processed_data.csv - Cleaned and encoded dataset")
+print("2. visualizations/feature_analysis.png - Comprehensive feature analysis")
+print("3. visualizations/correlation_heatmap.png - Feature correlation matrix")
+print("4. visualizations/feature_importance.png - Feature importance based on correlation")

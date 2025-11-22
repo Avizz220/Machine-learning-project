@@ -10,7 +10,14 @@ from sklearn.metrics import (classification_report, confusion_matrix, accuracy_s
                              precision_score, recall_score, f1_score, roc_auc_score,
                              roc_curve)
 import warnings
+import os
 warnings.filterwarnings('ignore')
+
+# Set up paths
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data_path = os.path.join(project_root, 'data', 'processed_data.csv')
+results_path = os.path.join(project_root, 'data', 'model_comparison.csv')
+vis_path = os.path.join(project_root, 'visualizations')
 
 # Set style
 sns.set_style("whitegrid")
@@ -20,7 +27,7 @@ print("MACHINE LEARNING MODEL TRAINING")
 print("=" * 80)
 
 # Load processed data
-df = pd.read_csv('processed_data.csv')
+df = pd.read_csv(data_path)
 print(f"\nDataset loaded: {df.shape[0]} rows, {df.shape[1]} columns")
 
 # Separate features and target
@@ -196,8 +203,8 @@ print(classification_report(y_test, y_pred_knn, target_names=['Not Placed', 'Pla
 # SAVE RESULTS TO CSV
 # ============================================================================
 results_df = pd.DataFrame([dt_metrics, knn_metrics])
-results_df.to_csv('model_comparison.csv', index=False)
-print("\n✓ Model comparison saved to 'model_comparison.csv'")
+results_df.to_csv(results_path, index=False)
+print("\n✓ Model comparison saved to 'data/model_comparison.csv'")
 
 # ============================================================================
 # VISUALIZATIONS
@@ -229,8 +236,8 @@ axes[1].set_ylabel('Actual', fontsize=12)
 axes[1].set_xlabel('Predicted', fontsize=12)
 
 plt.tight_layout()
-plt.savefig('confusion_matrices.png', dpi=300, bbox_inches='tight')
-print("✓ Confusion matrices saved to 'confusion_matrices.png'")
+plt.savefig(os.path.join(vis_path, 'confusion_matrices.png'), dpi=300, bbox_inches='tight')
+print("✓ Confusion matrices saved to 'visualizations/confusion_matrices.png'")
 
 # 2. ROC Curves
 fig, ax = plt.subplots(figsize=(10, 8))
@@ -250,8 +257,8 @@ ax.set_title('ROC Curves - Model Comparison', fontsize=14, fontweight='bold')
 ax.legend(loc='lower right', fontsize=11)
 ax.grid(alpha=0.3)
 plt.tight_layout()
-plt.savefig('roc_curves.png', dpi=300, bbox_inches='tight')
-print("✓ ROC curves saved to 'roc_curves.png'")
+plt.savefig(os.path.join(vis_path, 'roc_curves.png'), dpi=300, bbox_inches='tight')
+print("✓ ROC curves saved to 'visualizations/roc_curves.png'")
 
 # 3. Model Performance Comparison
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
@@ -283,8 +290,8 @@ for idx, (metric_name, dt_val, knn_val) in enumerate(zip(metrics_names, metrics_
                 ha='center', va='bottom', fontweight='bold')
 
 plt.tight_layout()
-plt.savefig('model_performance_comparison.png', dpi=300, bbox_inches='tight')
-print("✓ Model performance comparison saved to 'model_performance_comparison.png'")
+plt.savefig(os.path.join(vis_path, 'model_performance_comparison.png'), dpi=300, bbox_inches='tight')
+print("✓ Model performance comparison saved to 'visualizations/model_performance_comparison.png'")
 
 # 4. Decision Tree Visualization
 fig, ax = plt.subplots(figsize=(20, 12))
@@ -293,8 +300,8 @@ plot_tree(dt_best, filled=True, feature_names=X.columns,
           rounded=True, fontsize=10, ax=ax)
 plt.title('Decision Tree Structure (Optimized)', fontsize=16, fontweight='bold', pad=20)
 plt.tight_layout()
-plt.savefig('decision_tree_structure.png', dpi=300, bbox_inches='tight')
-print("✓ Decision tree structure saved to 'decision_tree_structure.png'")
+plt.savefig(os.path.join(vis_path, 'decision_tree_structure.png'), dpi=300, bbox_inches='tight')
+print("✓ Decision tree structure saved to 'visualizations/decision_tree_structure.png'")
 
 # 5. Feature Importance (Decision Tree)
 fig, ax = plt.subplots(figsize=(10, 8))
@@ -311,8 +318,8 @@ ax.set_ylabel('Features', fontsize=12)
 ax.set_title('Feature Importance - Decision Tree', fontsize=14, fontweight='bold')
 ax.grid(axis='x', alpha=0.3)
 plt.tight_layout()
-plt.savefig('dt_feature_importance.png', dpi=300, bbox_inches='tight')
-print("✓ Decision tree feature importance saved to 'dt_feature_importance.png'")
+plt.savefig(os.path.join(vis_path, 'dt_feature_importance.png'), dpi=300, bbox_inches='tight')
+print("✓ Decision tree feature importance saved to 'visualizations/dt_feature_importance.png'")
 
 # ============================================================================
 # FINAL SUMMARY
@@ -340,11 +347,11 @@ else:
     print(f"\n🤝 Tie: Both models have equal F1-Score: {dt_metrics['F1-Score']:.4f}")
 
 print("\n📁 Generated Files:")
-print("  1. model_comparison.csv - Detailed metrics comparison")
-print("  2. confusion_matrices.png - Confusion matrices for both models")
-print("  3. roc_curves.png - ROC curves comparison")
-print("  4. model_performance_comparison.png - Performance metrics comparison")
-print("  5. decision_tree_structure.png - Visual representation of decision tree")
-print("  6. dt_feature_importance.png - Feature importance from decision tree")
+print("  1. data/model_comparison.csv - Detailed metrics comparison")
+print("  2. visualizations/confusion_matrices.png - Confusion matrices for both models")
+print("  3. visualizations/roc_curves.png - ROC curves comparison")
+print("  4. visualizations/model_performance_comparison.png - Performance metrics comparison")
+print("  5. visualizations/decision_tree_structure.png - Visual representation of decision tree")
+print("  6. visualizations/dt_feature_importance.png - Feature importance from decision tree")
 
 print("\n" + "=" * 80)

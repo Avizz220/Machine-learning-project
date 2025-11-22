@@ -7,19 +7,28 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 import warnings
+import os
 warnings.filterwarnings('ignore')
+
+# Set up paths
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data_path = os.path.join(project_root, 'data', 'processed_data.csv')
+results_path = os.path.join(project_root, 'data', 'model_comparison.csv')
+summary_path = os.path.join(project_root, 'data', 'project_summary.csv')
+report_path = os.path.join(project_root, 'reports', 'COMPREHENSIVE_ANALYSIS_REPORT.txt')
+vis_path = os.path.join(project_root, 'visualizations')
 
 print("=" * 80)
 print("GENERATING COMPREHENSIVE ANALYSIS REPORT")
 print("=" * 80)
 
 # Load processed data
-df = pd.read_csv('processed_data.csv')
+df = pd.read_csv(data_path)
 X = df.drop('Placement', axis=1)
 y = df['Placement']
 
 # Load model comparison results
-results = pd.read_csv('model_comparison.csv')
+results = pd.read_csv(results_path)
 print("\n📊 Model Comparison Summary:")
 print(results.to_string(index=False))
 
@@ -118,8 +127,8 @@ axes[1].legend(loc='lower right', fontsize=11)
 axes[1].grid(alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('learning_curves.png', dpi=300, bbox_inches='tight')
-print("✓ Learning curves saved to 'learning_curves.png'")
+plt.savefig(os.path.join(vis_path, 'learning_curves.png'), dpi=300, bbox_inches='tight')
+print("\n✓ Learning curves saved to 'visualizations/learning_curves.png'")
 
 # ============================================================================
 # GENERATE COMPREHENSIVE TEXT REPORT
@@ -479,10 +488,10 @@ Group: 29
 """
 
 # Save report to file
-with open('COMPREHENSIVE_ANALYSIS_REPORT.txt', 'w', encoding='utf-8') as f:
+with open(report_path, 'w', encoding='utf-8') as f:
     f.write(report)
 
-print("\n✓ Comprehensive analysis report saved to 'COMPREHENSIVE_ANALYSIS_REPORT.txt'")
+print("\n✓ Comprehensive analysis report saved to 'reports/COMPREHENSIVE_ANALYSIS_REPORT.txt'")
 
 # ============================================================================
 # CREATE SUMMARY TABLE
@@ -523,8 +532,8 @@ summary_data = {
 }
 
 summary_df = pd.DataFrame(summary_data)
-summary_df.to_csv('project_summary.csv', index=False)
-print("✓ Project summary saved to 'project_summary.csv'")
+summary_df.to_csv(summary_path, index=False)
+print("✓ Project summary saved to 'data/project_summary.csv'")
 
 # ============================================================================
 # FINAL SUMMARY
@@ -535,23 +544,23 @@ print("=" * 80)
 
 print("\n📁 ALL GENERATED FILES:")
 print("\nData Files:")
-print("  1. processed_data.csv - Preprocessed dataset")
-print("  2. model_comparison.csv - Model metrics comparison")
-print("  3. project_summary.csv - Project summary table")
+print("  1. data/processed_data.csv - Preprocessed dataset")
+print("  2. data/model_comparison.csv - Model metrics comparison")
+print("  3. data/project_summary.csv - Project summary table")
 
 print("\nVisualization Files:")
-print("  4. feature_analysis.png - Feature distribution analysis")
-print("  5. correlation_heatmap.png - Feature correlation matrix")
-print("  6. feature_importance.png - Feature importance from correlation")
-print("  7. confusion_matrices.png - Confusion matrices for both models")
-print("  8. roc_curves.png - ROC curves comparison")
-print("  9. model_performance_comparison.png - Performance metrics comparison")
-print("  10. decision_tree_structure.png - Decision tree visualization")
-print("  11. dt_feature_importance.png - Feature importance from DT")
-print("  12. learning_curves.png - Learning curves for both models")
+print("  4. visualizations/feature_analysis.png - Feature distribution analysis")
+print("  5. visualizations/correlation_heatmap.png - Feature correlation matrix")
+print("  6. visualizations/feature_importance.png - Feature importance from correlation")
+print("  7. visualizations/confusion_matrices.png - Confusion matrices for both models")
+print("  8. visualizations/roc_curves.png - ROC curves comparison")
+print("  9. visualizations/model_performance_comparison.png - Performance metrics comparison")
+print("  10. visualizations/decision_tree_structure.png - Decision tree visualization")
+print("  11. visualizations/dt_feature_importance.png - Feature importance from DT")
+print("  12. visualizations/learning_curves.png - Learning curves for both models")
 
 print("\nReport Files:")
-print("  13. COMPREHENSIVE_ANALYSIS_REPORT.txt - Complete analysis report")
+print("  13. reports/COMPREHENSIVE_ANALYSIS_REPORT.txt - Complete analysis report")
 
 print("\nPython Scripts:")
 print("  14. explore_data.py - Data exploration script")

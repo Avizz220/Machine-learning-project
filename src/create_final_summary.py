@@ -3,6 +3,11 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch
 import numpy as np
+import os
+
+# Set up paths
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+vis_path = os.path.join(project_root, 'visualizations')
 
 # Create a comprehensive project summary visualization
 fig = plt.figure(figsize=(16, 10))
@@ -183,8 +188,8 @@ ax6.text(0.05, 0.95, insights_info, transform=ax6.transAxes,
          bbox=dict(boxstyle='round', facecolor='lightcoral', alpha=0.3, pad=1))
 
 plt.tight_layout(rect=[0, 0, 1, 0.96])
-plt.savefig('PROJECT_SUMMARY_VISUALIZATION.png', dpi=300, bbox_inches='tight')
-print("✓ Project summary visualization saved to 'PROJECT_SUMMARY_VISUALIZATION.png'")
+plt.savefig(os.path.join(vis_path, 'PROJECT_SUMMARY_VISUALIZATION.png'), dpi=300, bbox_inches='tight')
+print("✓ Project summary visualization saved to 'visualizations/PROJECT_SUMMARY_VISUALIZATION.png'")
 plt.close()
 
 # ============================================================================
@@ -198,34 +203,35 @@ files_list = """
 📁 ALL PROJECT FILES:
 
 DATA FILES (4):
-  ✓ college_student_placement_dataset.csv - Original dataset
-  ✓ processed_data.csv - Preprocessed data
-  ✓ model_comparison.csv - Model metrics
-  ✓ project_summary.csv - Summary table
+  ✓ data/college_student_placement_dataset.csv - Original dataset
+  ✓ data/processed_data.csv - Preprocessed data
+  ✓ data/model_comparison.csv - Model metrics
+  ✓ data/project_summary.csv - Summary table
 
-PYTHON SCRIPTS (4):
-  ✓ explore_data.py - Data exploration
-  ✓ visualize_and_preprocess.py - Preprocessing
-  ✓ train_models.py - Model training
-  ✓ generate_report.py - Report generation
+PYTHON SCRIPTS (5):
+  ✓ src/explore_data.py - Data exploration
+  ✓ src/visualize_and_preprocess.py - Preprocessing
+  ✓ src/train_models.py - Model training
+  ✓ src/generate_report.py - Report generation
+  ✓ src/create_final_summary.py - Final summary
 
-VISUALIZATIONS (12):
-  ✓ feature_analysis.png - Feature distributions
-  ✓ correlation_heatmap.png - Correlation matrix
-  ✓ feature_importance.png - Feature correlations
-  ✓ confusion_matrices.png - Confusion matrices
-  ✓ roc_curves.png - ROC curves
-  ✓ model_performance_comparison.png - Performance comparison
-  ✓ decision_tree_structure.png - Tree visualization
-  ✓ dt_feature_importance.png - DT feature importance
-  ✓ learning_curves.png - Learning curves
-  ✓ PROJECT_SUMMARY_VISUALIZATION.png - Project summary
+VISUALIZATIONS (13):
+  ✓ visualizations/feature_analysis.png - Feature distributions
+  ✓ visualizations/correlation_heatmap.png - Correlation matrix
+  ✓ visualizations/feature_importance.png - Feature correlations
+  ✓ visualizations/confusion_matrices.png - Confusion matrices
+  ✓ visualizations/roc_curves.png - ROC curves
+  ✓ visualizations/model_performance_comparison.png - Performance comparison
+  ✓ visualizations/decision_tree_structure.png - Tree visualization
+  ✓ visualizations/dt_feature_importance.png - DT feature importance
+  ✓ visualizations/learning_curves.png - Learning curves
+  ✓ visualizations/PROJECT_SUMMARY_VISUALIZATION.png - Project summary
 
 REPORTS (2):
-  ✓ COMPREHENSIVE_ANALYSIS_REPORT.txt - Full analysis
-  ✓ README.md - Project documentation
+  ✓ reports/COMPREHENSIVE_ANALYSIS_REPORT.txt - Full analysis
+  ✓ docs/README.md - Project documentation
 
-TOTAL: 22 FILES GENERATED
+TOTAL: 24 FILES GENERATED
 """
 
 print(files_list)
