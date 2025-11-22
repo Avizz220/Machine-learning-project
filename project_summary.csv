@@ -1,0 +1,15 @@
+Aspect,Details
+Dataset Size,"10,000 students"
+Number of Features,9 (8 features + 1 target)
+Class Distribution,"Not Placed: 83.41%, Placed: 16.59%"
+Train-Test Split,"80% train (8,000), 20% test (2,000)"
+Decision Tree - Best Params,"max_depth=5, criterion=gini, class_weight=balanced"
+Decision Tree - CV F1-Score,0.9996
+Decision Tree - Test Accuracy,100.00%
+Decision Tree - Test F1-Score,1.0000
+KNN - Best Params,"n_neighbors=7, metric=manhattan, weights=distance"
+KNN - CV F1-Score,0.8264
+KNN - Test Accuracy,95.15%
+KNN - Test F1-Score,0.8391
+Best Model,Decision Tree (Perfect Performance)
+Key Features,"CGPA, Communication Skills, IQ, Prev Sem Result"
